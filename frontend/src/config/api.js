@@ -1,0 +1,16 @@
+// src/config/api.js
+const API_CONFIG = {
+  BASE_URL: 'http://10.1.196.46:3000/api',
+  TIMEOUT: 10000,
+  ENDPOINTS: {
+    LOGIN: '/users/login',
+    REGISTER: '/users/create',
+    USERS: '/users',
+    USER_BY_ID: '/users/:id',
+    USER_UPDATE: '/users/:id',
+    USER_PATCH: '/users/:id',
+    USER_DELETE: '/users/delete/:id'
+  }
+}
+
+export default API_CONFIG

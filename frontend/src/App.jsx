@@ -1,13 +1,13 @@
 // src/App.jsx
-import './App.css'
-
+// import { Routes, Route, Navigate } from 'react-router-dom'
+import Navbar from './views/common/Navbar'
+ 
 function App() {
   return (
-    <div>
-      <h1>Sistema de Información Web</h1>
-      <p>Configuración inicial completada</p>
-    </div>
+    <>
+      <Navbar />      
+    </>
   )
 }
-
+ 
 export default App
