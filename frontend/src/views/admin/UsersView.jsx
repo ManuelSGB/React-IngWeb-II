@@ -1,0 +1,9 @@
+import { Link } from 'react-router-dom'
+
+const users = [{ name: 'Mariana Castillo', email: 'mariana@ejemplo.com', role: 'Moderadora', status: 'Activo', joined: '12 Jun 2026' }, { name: 'Diego Ramirez', email: 'diego@ejemplo.com', role: 'Miembro', status: 'Activo', joined: '10 Jun 2026' }, { name: 'Lucia Mendez', email: 'lucia@ejemplo.com', role: 'Miembro', status: 'Inactivo', joined: '08 Jun 2026' }, { name: 'Nicolas Perez', email: 'nicolas@ejemplo.com', role: 'Miembro', status: 'Activo', joined: '03 Jun 2026' }]
+
+function UsersView() {
+  return <div className="admin-page section-wrap"><div className="admin-top"><div><p className="eyebrow">PANEL DE GESTION / USUARIOS</p><h1>Personas en la comunidad</h1><p className="hero-lead">Administra perfiles, roles y acceso al espacio.</p></div><Link className="button button-dark" to="/admin/usuarios/nuevo">+ Agregar usuario</Link></div><div className="stat-strip"></div><div className="table-panel"><div className="table-toolbar"><h2>Directorio de usuarios</h2><input className="search-input" placeholder="Buscar usuario" aria-label="Buscar usuario" /></div><div className="table-scroll"><table><thead><tr><th>Usuario</th><th>Rol</th><th>Estado</th><th>Registro</th><th aria-label="Acciones" /></tr></thead><tbody>{users.map((user) => <tr key={user.email}><td><div className="user-cell"><span className="user-avatar">{user.name.split(' ').map((word) => word[0]).join('')}</span><div><strong>{user.name}</strong><span>{user.email}</span></div></div></td><td>{user.role}</td><td><span className={`status status-${user.status.toLowerCase()}`}>{user.status}</span></td><td>{user.joined}</td><td><button className="icon-button" type="button" aria-label={`Editar a ${user.name}`}>•••</button></td></tr>)}</tbody></table></div></div></div>
+}
+
+export default UsersView
