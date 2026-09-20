@@ -1,1 +1,45 @@
 /* La navegacion comparte sus variables y componentes con App.css. */
+
+.nav-dropdown {
+	align-self: center;
+	position: relative;
+}
+
+.nav-dropdown-menu {
+	background: var(--white);
+	border: 1px solid var(--line);
+	box-shadow: 0 10px 24px rgba(24, 37, 31, .12);
+	display: none;
+	left: -18px;
+	min-width: 190px;
+	padding: 8px 0;
+	position: absolute;
+	top: 100%;
+	z-index: 20;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+	display: grid;
+}
+
+.nav-dropdown-menu a {
+	color: var(--muted);
+	font-size: 12px;
+	padding: 11px 16px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a:focus {
+	background: var(--paper);
+	color: var(--ink);
+	outline: none;
+}
+
+@media (max-width: 800px) {
+	.nav-dropdown-menu {
+		left: -12px;
+	}
+}

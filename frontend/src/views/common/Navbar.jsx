@@ -10,7 +10,14 @@ const Navbar = () => {
           <img className="brand-logo" src="/EcoWatt.jpeg" alt="EcoWatt" />
         </Link>
         <nav className="navbar-menu" aria-label="Navegacion principal">
-          <NavLink className="nav-link" to="/" end>Aprende</NavLink>
+          <div className="nav-dropdown">
+            <NavLink className="nav-link" to="/" end>Aprende</NavLink>
+            <div className="nav-dropdown-menu">
+              <a href="/#energia-renovable">Energía renovable</a>
+              <a href="/#sugerencias">Sugerencias</a>
+              <a href="/#calculadora">Calculadora</a>
+            </div>
+          </div>
           <NavLink className="nav-link" to="/foro">Foro</NavLink>
           <NavLink className="nav-link nav-link-admin" to="/admin/usuarios">Panel de gestion</NavLink>
         </nav>
