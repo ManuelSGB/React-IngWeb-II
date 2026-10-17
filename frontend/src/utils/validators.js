@@ -33,6 +33,6 @@ export const isRequired = (value) => {
  * Valida que el rol sea válido
  */
 export const isValidRole = (role) => {
-  const validRoles = ['admin', 'seller', 'customer', 'user']
+  const validRoles = ['admin', 'user']
   return validRoles.includes(role)
 }

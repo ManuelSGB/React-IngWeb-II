@@ -40,10 +40,15 @@ class StorageService {
     return this.getItem(this.roleKey)
   }
 
+  removeUserRole() {
+    return this.removeItem(this.roleKey)
+  }
+
   clearSession() {
-    this.removeToken()
-    this.removeUser()
-    this.removeUserRole()
+    const tokenRemoved = this.removeToken()
+    const userRemoved = this.removeUser()
+    const roleRemoved = this.removeUserRole()
+    return tokenRemoved && userRemoved && roleRemoved
   }
 
   setItem(key, value) {

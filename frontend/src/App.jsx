@@ -8,6 +8,7 @@ import AddUserView from './views/admin/AddUserView'
 import ForumAdminView from './views/admin/ForumAdminView'
 import LoginView from './views/auth/LoginView'
 import RegisterView from './views/auth/RegisterView'
+import ProfileView from './views/profile/ProfileView'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<BlogView />} />
           <Route path="/foro" element={<ForumView />} />
           <Route path="/foro/nuevo-tema" element={<AddTopicView />} />
+          <Route path="/perfil" element={<ProfileView />} />
           <Route path="/admin/usuarios" element={<UsersView />} />
           <Route path="/admin/usuarios/nuevo" element={<AddUserView />} />
           <Route path="/admin/foro" element={<ForumAdminView />} />

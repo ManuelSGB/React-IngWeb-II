@@ -1,4 +1,3 @@
-// src/services/httpService.js
 import API_CONFIG from '../config/api'
 
 class HttpService {
@@ -11,17 +10,9 @@ class HttpService {
   }
 
   getHeaders(includeAuth = true) {
-    const headers = {
-      'Content-Type': 'application/json'
-    }
-    
-    if (includeAuth) {
-      const token = this.getToken()
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`
-      }
-    }
-    
+    const headers = { 'Content-Type': 'application/json' }
+    const token = includeAuth ? this.getToken() : null
+    if (token) headers.Authorization = `Bearer ${token}`
     return headers
   }
 
@@ -29,89 +20,51 @@ class HttpService {
     let data = {}
     try {
       data = await response.json()
-    } catch (e) {
-      console.error('Error al parsear JSON:', e)
+    } catch {
+      data = {}
     }
-    
+
     if (!response.ok) {
-      const errorMessage = data.message || data.error || `Error HTTP: ${response.status}`
-      throw new Error(errorMessage)
+      throw new Error(data.message || data.error || `Error HTTP: ${response.status}`)
     }
-    
     return data
   }
 
-  async post(endpoint, data, includeAuth = true) {
+  async request(method, endpoint, data, includeAuth) {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT)
     try {
-      const url = `${this.baseURL}${endpoint}`
-      const response = await fetch(url, {
-        method: 'POST',
+      const options = {
+        method,
         headers: this.getHeaders(includeAuth),
-        body: JSON.stringify(data)
-      })
+        signal: controller.signal
+      }
+      if (data !== undefined) options.body = JSON.stringify(data)
+      const response = await fetch(`${this.baseURL}${endpoint}`, options)
       return await this.handleResponse(response)
-    } catch (error) {
-      console.error(`❌ POST ${endpoint} error:`, error)
-      throw error
+    } finally {
+      clearTimeout(timeout)
     }
   }
 
-  async get(endpoint, includeAuth = true) {
-    try {
-      const url = `${this.baseURL}${endpoint}`
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: this.getHeaders(includeAuth)
-      })
-      return await this.handleResponse(response)
-    } catch (error) {
-      console.error(`❌ GET ${endpoint} error:`, error)
-      throw error
-    }
+  get(endpoint, includeAuth = true) {
+    return this.request('GET', endpoint, undefined, includeAuth)
   }
 
-  async put(endpoint, data, includeAuth = true) {
-    try {
-      const url = `${this.baseURL}${endpoint}`
-      const response = await fetch(url, {
-        method: 'PUT',
-        headers: this.getHeaders(includeAuth),
-        body: JSON.stringify(data)
-      })
-      return await this.handleResponse(response)
-    } catch (error) {
-      console.error(`❌ PUT ${endpoint} error:`, error)
-      throw error
-    }
+  post(endpoint, data, includeAuth = true) {
+    return this.request('POST', endpoint, data, includeAuth)
   }
 
-  async patch(endpoint, data, includeAuth = true) {
-    try {
-      const url = `${this.baseURL}${endpoint}`
-      const response = await fetch(url, {
-        method: 'PATCH',
-        headers: this.getHeaders(includeAuth),
-        body: JSON.stringify(data)
-      })
-      return await this.handleResponse(response)
-    } catch (error) {
-      console.error(`❌ PATCH ${endpoint} error:`, error)
-      throw error
-    }
+  put(endpoint, data, includeAuth = true) {
+    return this.request('PUT', endpoint, data, includeAuth)
   }
 
-  async delete(endpoint, includeAuth = true) {
-    try {
-      const url = `${this.baseURL}${endpoint}`
-      const response = await fetch(url, {
-        method: 'DELETE',
-        headers: this.getHeaders(includeAuth)
-      })
-      return await this.handleResponse(response)
-    } catch (error) {
-      console.error(`❌ DELETE ${endpoint} error:`, error)
-      throw error
-    }
+  patch(endpoint, data, includeAuth = true) {
+    return this.request('PATCH', endpoint, data, includeAuth)
+  }
+
+  delete(endpoint, includeAuth = true) {
+    return this.request('DELETE', endpoint, undefined, includeAuth)
   }
 }
 
